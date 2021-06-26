@@ -1,6 +1,6 @@
 const express = require('express');
 const cors = require('cors');
-const { MongoClient } = require('mongodb');
+const { MongoClient, ObjectID } = require('mongodb');
 
 const app = express()
 
@@ -45,6 +45,32 @@ client.connect(err => {
     .then(result => {
       console.log('inserted count', result.insertedCount)
       res.send(result.insertedCount > 0)
+    })
+  })
+
+  // get blogs
+  app.get('/blogs', (req, res) => {
+    blogsCollection.find({})
+    .toArray((err, items) => {
+      res.send(items)
+    })
+  })
+
+  // admin check
+  app.post('isAdmin', (req, res) => {
+    const email = req.body.email;
+    adminCollection.find({email: email})
+    .toArray((err, admins) => {
+      res.send(admins.length > 0)
+    })
+  })
+
+  // single blog post
+  app.get('/blogDetails/:id', (req, res) => {
+    blogsCollection.find({_id:ObjectID(req.params.id)})
+    .toArray((err, documents) => {
+      res.send(documents[0])
+      console.log(err,documents)
     })
   })
 });
