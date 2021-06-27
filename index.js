@@ -59,12 +59,13 @@ client.connect((err) => {
     const newBlog = req.body;
     console.log("check add blog body data", req.body);
     isAdmin(req.body.email)
-      .then((res) => {
-        console.log("is admin or not", res);
-        if (res) {
+      .then((isAdmin) => {
+        console.log("is admin or not", isAdmin);
+        if (isAdmin) {
           blogsCollection.insertOne(newBlog).then((result) => {
             console.log("inserted count", result.insertedCount);
             res.send(result.insertedCount > 0);
+ 
           });
         } else {
           res.send({ status: 401, message: "Unauthorized" });
