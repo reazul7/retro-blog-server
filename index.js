@@ -24,7 +24,7 @@ const client = new MongoClient(uri, {
 });
 
 const isAdmin = (email) => {
-  return fetch("http://localhost:5000/isAdmin", {
+  return fetch("https://desolate-savannah-78335.herokuapp.com/isAdmin", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
