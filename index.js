@@ -101,6 +101,19 @@ client.connect((err) => {
         console.log(err, documents);
       });
   });
+
+  // manage Blogs
+  app.get('/manageBlog/', (req, res) => {
+    blogsCollection.find({}).toArray((err, documents) => {
+      res.send(documents);
+    })
+  })
+
+  // delete blog
+  app.delete('/deleteBlog/:id', (req, res) => {
+    blogsCollection.deleteOne({ _id: ObjectID(req.params.id) })
+    .then((result) => res.send(result.deletedCount > 0))
+  })
 });
 
 app.listen(port);
