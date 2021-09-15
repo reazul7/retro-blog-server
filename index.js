@@ -97,7 +97,7 @@ client.connect((err) => {
     blogsCollection
       .find({ _id: ObjectID(req.params.id) })
       .toArray((err, documents) => {
-        res.send(documents[0]);
+        res.send(documents);
         console.log(err, documents);
       });
   });
@@ -114,6 +114,15 @@ client.connect((err) => {
     blogsCollection.deleteOne({ _id: ObjectID(req.params.id) })
     .then((result) => res.send(result.deletedCount > 0))
   })
+
+  // single blog
+  app.get('/editBlog/', (req, res) => {
+    blogsCollection.find({}).toArray((err, documents) => {
+      res.send(documents);
+    })
+  })
+
+
 });
 
 app.listen(port);
