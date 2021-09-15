@@ -97,7 +97,7 @@ client.connect((err) => {
     blogsCollection
       .find({ _id: ObjectID(req.params.id) })
       .toArray((err, documents) => {
-        res.send(documents[0]);
+        res.send(documents);
         console.log(err, documents);
       });
   });
